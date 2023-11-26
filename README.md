@@ -1,2 +1,2 @@
 # StudyNotion
- A EdTech for passionate mentors and coders.
+ A EdTech platform for passionate mentors and coders.
