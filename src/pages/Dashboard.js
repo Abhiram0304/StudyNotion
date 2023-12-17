@@ -17,7 +17,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='relative w-100vw min-h-[100vh] flex justify-center bg-richblack-900 text-richblack-5'>
+    <div className='relative w-100vw min-h-[100vh] flex md:flex-row flex-col justify-center bg-richblack-900 text-richblack-5'>
       <DashboardSideBar />
       <Outlet />
     </div>

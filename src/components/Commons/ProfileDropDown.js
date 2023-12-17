@@ -19,11 +19,11 @@ const ProfileDropDown = () => {
 
   return (
     <div>
-      <div className='flex text-white justify-center items-center gap-[0.5rem] cursor-pointer'>
+      <div className='relative flex text-white justify-center items-center gap-[0.5rem] cursor-pointer'>
         
         {
           dropDown && 
-          <div className='flex flex-col absolute top-[3rem] bg-richblack-600 rounded-lg bg-opacity-50 z-10 backdrop-blur-md'>
+          <div className='flex flex-col absolute top-[2.5rem] right-0 bg-richblack-700 rounded-lg bg-opacity-50 z-10 backdrop-blur-lg'>
             <button className='px-[0.5rem] py-[0.5rem] bg-transparent text-white font-semibold text-[1rem]' onClick={() => setOpenModal({  
                             heading:"Are you sure?",
                             subheading:"You will be logged out of your account.",

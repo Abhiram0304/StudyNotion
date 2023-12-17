@@ -9,8 +9,8 @@ const ContactUs = () => {
   return (
     <div className='w-[100vw] min-h-[100vh] bg-richblack-900'>
         <div className ='font-inter flex justify-center items-center'>
-            <div className='w-3/5 my-[5rem] flex justify-between items-start gap-[3rem]'>
-                <div className='lg:w-[35%] h-auto py-[2rem] px-[2rem] rounded-lg text-richblack-200 bg-richblack-800 flex flex-col gap-[1rem]'>
+            <div className='lg:w-3/5 w-full mx-auto my-[5rem] flex lg:flex-row flex-col justify-between lg:items-start items-center gap-[3rem]'>
+                <div className='lg:w-[35%] w-[95%] h-auto py-[2rem] px-[2rem] rounded-lg text-richblack-200 bg-richblack-800 flex flex-col gap-[1rem]'>
                     <div className='flex gap-[1rem] items-start justify-start'>
                         <HiChatAlt2 className='text-[30px]' />
                         <div className='flex flex-col gap-[2px]'>
@@ -36,7 +36,7 @@ const ContactUs = () => {
                         </div>
                     </div>
                 </div>
-                <div className='lg:w-[60%] border-[1px] rounded-lg border-richblack-600 px-[2rem] py-[2rem]'>
+                <div className='lg:w-[60%] w-[95%] border-[1px] rounded-lg border-richblack-600 px-[2rem] py-[2rem]'>
                     <div className='text-richblack-5 font-semibold text-[33px] leading-[1.2]'>Got a Idea? We’ve got the skills. Let’s team up</div>
                     <p className='font-medium text-[16px] text-richblack-300'>Tell us more about yourself and what you’re got in mind.</p>
                     <ContactForm />

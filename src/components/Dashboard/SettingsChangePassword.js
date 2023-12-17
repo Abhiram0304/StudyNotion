@@ -35,8 +35,8 @@ const SettingsChangePassword = () => {
                     <h2 className='text-richblack-5 font-medium text-[20px]'>Change Password</h2>
                     <div className='flex w-full justify-center items-center gap-[2rem]'>
                         <form className='flex flex-col w-full gap-[1.5rem]'>
-                            <div className='flex w-full justify-between items-center px-[1rem]'>
-                                <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                            <div className='flex md:flex-row flex-col md:gap-[0] gap-[1rem] w-full justify-between items-center px-[1rem]'>
+                                <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                     <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Current Password</p>
                                     <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type={showPassword1 ? ('text'): ('password') } name='currentPassword' placeholder='Enter current Password' {...register("currentPassword",{required:true})}/>
                                     <span className='absolute text-white top-8 right-2' onClick={() => setShowPassword1((prev) => !prev)}>
@@ -45,7 +45,7 @@ const SettingsChangePassword = () => {
                                         }
                                     </span>
                                 </label>
-                                <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                                <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                     <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>New Password</p>
                                     <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type={showPassword2 ? ('text'): ('password') } name='newPassword' placeholder='Enter new Password' {...register("newPassword",{required:true})}/>
                                     <span className='absolute text-white top-8 right-2' onClick={() => setShowPassword2((prev) => !prev)}>

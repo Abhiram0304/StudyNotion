@@ -51,8 +51,8 @@ const EditProfile = () => {
                     <h2 className='text-richblack-5 font-medium text-[20px]'>Profile Information</h2>
                     <div className='w-full flex flex-col gap-[1rem]'>
                         <div className='w-full'>
-                            <div className='flex w-full justify-center items-center gap-[2rem]'>
-                                <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                            <div className='flex md:flex-row flex-col w-full justify-center items-center md:gap-[2rem] gap-[1rem]'>
+                                <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                     <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>First Name</p>
                                     <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' placeholder='Enter first Name' name='firstName' defaultValue={user?.firstName} {...register("firstName",{required:true})}/>
                                     {
@@ -63,7 +63,7 @@ const EditProfile = () => {
                                         )
                                     }
                                 </label>
-                                <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                                <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                     <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Last Name</p>
                                     <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' placeholder='Enter last Name' name='lastName' defaultValue={user?.lastName} {...register("lastName",{required:true})}/>
                                     {
@@ -76,12 +76,12 @@ const EditProfile = () => {
                                 </label>
                             </div>
                         </div>
-                        <div className='w-full flex items-center gap-[2rem] justify-center'>
-                            <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                        <div className='w-full flex md:flex-row flex-col items-center md:gap-[2rem] gap-[1rem] justify-center'>
+                            <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Date of Birth</p>
                                 <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='date' name='dateOfBith' placeholder='YYYY-MM-DD' defaultValue={user?.additionalDetails?.dateOfBirth} {...register("dateOfBirth", {  required:false, max:{value: new Date().toISOString().split("T")[0]}})}/>
                             </label>
-                            <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                            <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Gender</p>
                                 <div className='w-full flex justify-between bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2'>
                                     <div className='flex gap-[8px]'>
@@ -99,8 +99,8 @@ const EditProfile = () => {
                                 </div>
                             </label>
                         </div>
-                        <div className='flex items-center gap-[2rem] justify-center'>
-                            <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                        <div className='flex md:flex-row flex-col items-center md:gap-[2rem] gap-[1rem] justify-center'>
+                            <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Phone Number</p>
                                 <div className='w-full flex justify-between gap-[8px] items-center flex-row'>
                                     <select name='dropDown' {...register("countryCode",{required:true})} className='w-[25%] bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-2 px-2' >
@@ -129,7 +129,7 @@ const EditProfile = () => {
                                     }
                                 </div>
                             </label>
-                            <label className='flex w-[45%] relative flex-col gap-[2px]'>
+                            <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>About</p>
                                 <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='about' placeholder='Enter bio Details' defaultValue={user?.additionalDetails?.about} {...register("about",{required:false,"maxLength":{value:100,message:"Max limit 100 characters"}})}/>
                                 {

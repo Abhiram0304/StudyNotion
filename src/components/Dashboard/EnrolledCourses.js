@@ -28,7 +28,7 @@ const EnrolledCourses = () => {
     },[]);
 
   return (
-    <div className='font-inter min-h-[100vh] w-[85%] bg-richblack-900'>
+    <div className='font-inter min-h-[100vh] lg:w-[85%] md:w-[75%] bg-richblack-900'>
         {
             loading ? 
             (<div className='w-full h-full flex justify-center items-center'>

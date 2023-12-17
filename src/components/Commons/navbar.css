@@ -1,0 +1,16 @@
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s; /* You can adjust the duration as needed */
+  }
+  
+  .sidebar-open {
+    width: 70vw;
+  }
+  
+  .sidebar-closed {
+    width: 0;
+  }
+  

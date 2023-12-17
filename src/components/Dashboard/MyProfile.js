@@ -9,14 +9,14 @@ const MyProfile = () => {
     const navigate = useNavigate();
 
   return (
-    <div className='font-inter min-h-[100vh] w-[85%] bg-richblack-900'>
-        <div className='px-[5rem] py-[5rem] flex flex-col gap-[1.5rem] w-3/4 mx-auto'>
+    <div className='font-inter min-h-[100vh] lg:w-[85%] md:w-[75%] w-[100%] bg-richblack-900'>
+        <div className='md:px-[5rem] px-[0.5rem] md:py-[5rem] py-[2rem] flex flex-col gap-[1.5rem] md:w-3/4 w-[100%] mx-auto'>
 
             <h1 className='text-richblack-5 font-edu-sa font-semibold text-[36px] mb-[10px]'>My Profile</h1>
 
             <div className='flex justify-between items-center px-[1.5rem] py-[1.5rem] bg-richblack-800 rounded-xl'>
                 <div className='flex gap-[1rem]'>
-                    <img src={`${user?.image}`} width={80} height={80} className='rounded-full' alt='userImage' />
+                    <div className='md:w-[80px] md:h-[80px] w-[40px] h-[40px] rounded-full flex justify-center items-center'><img src={`${user?.image}`} width={"100%"} className='rounded-full' alt='userImage' /></div>
                     <div className='flex flex-col items-start justify-evenly'>
                         <h2 className='text-richblack-5 font-semibold text-[18px]'>{user?.firstName + " " + user?.lastName}</h2>
                         <p className='text-richblack-300 text-[14px]'>{user?.email}</p>

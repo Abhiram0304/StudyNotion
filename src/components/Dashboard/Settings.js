@@ -18,15 +18,15 @@ const Settings = () => {
     const [modalOpen,setModalOpen] = useState(null);
 
   return (
-    <div className='font-inter min-h-[100vh] w-[85%] bg-richblack-900'>
-        <div className='px-[5rem] py-[5rem] flex flex-col gap-[1.5rem] w-3/4 mx-auto'>
+    <div className='font-inter min-h-[100vh] lg:w-[85%] md:w-[75%] w-[100%] bg-richblack-900'>
+        <div className='md:px-[2rem] px-[0.5rem] md:py-[3rem] py-[2rem] flex flex-col gap-[1.5rem] lg:w-3/4 w-[95%] mx-auto'>
 
             <h1 className='text-richblack-5 font-edu-sa font-semibold text-[36px] mb-[10px]'>Settings</h1>
 
-            <div className='flex justify-between items-center px-[1.5rem] py-[1.5rem] bg-richblack-800 rounded-xl'>
+            <div className='flex justify-between items-center md:px-[1.5rem] px-[0.5rem] md:py-[1.5rem] py-[1rem] bg-richblack-800 rounded-xl'>
                 <div className='flex items-center justify-center'>
-                    <div className='flex gap-[2rem] justify-center items-center'>
-                        <img src={`${user?.image}`} width={80} height={80} className='rounded-full' alt='userImage' />
+                    <div className='w-full flex gap-[2rem] md:justify-center justify-between items-center'>
+                    <div className='md:w-[80px] md:h-[80px] w-[60px] h-[60px] rounded-full flex justify-center  items-center'><img src={`${user?.image}`} width={"100%"} className='rounded-full' alt='userImage' /></div>
                         <div className='flex flex-col justify-between items-center gap-[1rem]'>
                             <h2 className='text-richblack-5 font-medium text-[20px]'>Change Profile Picture</h2>
                             <div className='flex gap-[2rem]'>
@@ -38,16 +38,16 @@ const Settings = () => {
                 </div>
             </div>
 
-            <div className='flex justify-between items-center px-[1.5rem] py-[1.5rem] bg-richblack-800 rounded-xl'>
+            <div className='flex justify-between items-center md:px-[1.5rem] px-[0.5rem] md:py-[1.5rem] py-[1rem] bg-richblack-800 rounded-xl'>
                 <EditProfile />
             </div>
 
-            <div className='flex flex-col px-[1.5rem] py-[1.5rem] bg-richblack-800 rounded-xl'>
+            <div className='flex flex-col md:px-[1.5rem] px-[0.5rem] md:py-[1.5rem] py-[1rem] bg-richblack-800 rounded-xl'>
                 <SettingsChangePassword />
             </div>
 
             <div className='flex justify-between items-center lg:px-[2.5rem] py-[1.5rem] bg-pink-900 rounded-xl'>
-                <div className='flex items-center w-full justify-between'>
+                <div className='flex items-center gap-[1rem] px-[0.5rem] w-full justify-between'>
                     <div className='flex flex-col gap-[2rem]'>
                         <div onClick={() => setModalOpen({
                                 heading:"Are you sure?",
