@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, matchPath } from 'react-router-dom';
+import { Link, useLocation,useNavigate, matchPath } from 'react-router-dom';
 import Logo from '../../assets/Logo/Logo-Full-Light.png';
 import { BiChevronDown } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { FaShoppingCart } from 'react-icons/fa';
 import ProfileDropDown from './ProfileDropDown';
 import { APIconnector } from '../../services/APIconnector';
 import { categories } from '../../services/APIs';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { NavbarLinks } from '../../data/navbar-links';
 import Button from '../HomePage/Button';
 import { ImCross } from "react-icons/im";
@@ -19,6 +18,7 @@ import { RxDashboard } from "react-icons/rx";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
@@ -44,13 +44,15 @@ const Navbar = () => {
     fetchSubLinks();
   }, []);
 
-  function handleClose(){
+  function handleClose(path){
+    console.log(path);
+    navigate(path);
     setMenuOpen(false);
   }
 
   return (
     <>
-      <div className='flex h-14 px-[1rem] bg-richblack-900 items-center justify-between border-b-[2px] border-richblack-700 transition-all duration-100'>
+      <div className='relative flex h-14 px-[1rem] bg-richblack-900 items-center justify-between border-b-[2px] border-richblack-700 transition-all duration-100'>
         <div className='w-[160px] h-[32px] flex items-center justify-start'>
           <button onClick={() => setMenuOpen(true)} className='text-[white] text-[1.5rem] font-extrabold md:hidden flex'>
             <FiMenu />
@@ -65,18 +67,16 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className={`absolute top-0 left-0 md:hidden ${menuOpen ? "w-[70vw] flex" : "w-0"} h-[100vh] z-[10] transition-all duration-200`}>
-          <Sidebar backgroundColor="black" width='70vw' collapsedWidth='0' collapsed={!menuOpen}>
-            <Menu>
-              <div className=' bg-[black] text-white absolute right-[0.5rem] top-[0.5rem] text-[1.2rem]' onClick={handleClose}><ImCross /></div>
-              <MenuItem className='w-full mt-[2rem] text-white bg-transparent font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' component={<Link to={'/'} onClick={handleClose} />}><div className='flex gap-[0.5rem] justify-center items-center'><FaHome /><p>Home</p></div></MenuItem>
-              <MenuItem className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' component={<Link to={'/about'} onClick={handleClose} />}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></MenuItem>
-              <MenuItem className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' component={<Link to={'/contact'} onClick={handleClose} />}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></MenuItem>
+        <div className={`absolute bg-black top-0 left-0 bottom-0 md:hidden overflow-hidden ${menuOpen ? "w-[60%]" : "w-[0]"} h-[100vh] z-[10] transition-all duration-200`}>
+            <div className='flex flex-col gap-[1.5rem] px-[1rem] py-[3rem] overflow-hidden'>
+              <div className=' bg-[black] text-white absolute right-[1rem] top-[1rem] text-[1.2rem]' onClick={() => setMenuOpen(false)}><ImCross /></div>
+              <div className='w-full mt-[2rem] text-white bg-transparent font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/')} ><div className='flex gap-[0.5rem] justify-center items-center'><FaHome /><p>Home</p></div></div>
+              <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/about')}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></div>
+              <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/contact')}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></div>
               {
-                token && <MenuItem className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' component={<Link to={'/dashboard/myProfile'} onClick={handleClose} />}><div className='flex gap-[0.5rem] justify-center items-center'><RxDashboard /><p>Dashboard</p></div></MenuItem>
+                token && <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' ><div className='flex gap-[0.5rem] justify-center items-center' onClick={() => handleClose('/dashboard/myProfile')}><RxDashboard /><p>Dashboard</p></div></div>
               }
-            </Menu>
-          </Sidebar>
+            </div>
         </div>
 
         <div className='md:flex md:visible hidden items-center justify-center gap-[2rem] text-white transition-all duration-200'>

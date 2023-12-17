@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className='font-inter w-full mx-auto bg-richblack-800 lg:px-[10rem] px-[1rem] lg:py-[3rem] py-[1.5rem] border-t-[2px] border-richblack-500'>
         <div className='relative flex lg:flex-nowrap flex-wrap justify-center w-full gap-[4rem] h-auto'>
-            <div className='flex flex-wrap gap-[2rem] mx-auto lg:w-1/2 w-4/5 justify-between'>
+            <div className='flex flex-wrap gap-[2rem] lg:pl-0 pl-[2rem] justify-between mx-auto lg:w-1/2 w-4/5'>
                 <div className='flex flex-col gap-7'>
                     <img src={FooterLogo} className='w-[160px]' />
                     <FooterPart heading={"Company"} content={[

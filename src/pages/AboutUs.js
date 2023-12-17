@@ -16,7 +16,7 @@ const AboutUs = () => {
         {/* section 1 */}
         <div className='relative bg-richblack-800 h-auto w-full pb-[4rem]'>
             <div className='relative w-3/4 h-auto mx-auto flex flex-col justify-center items-center'>
-                <div className='relative md:w-3/4 w-4/5 text-center my-[3rem] flex flex-col lg:gap-[2rem] gap-[1rem]'>
+                <div className='relative md:w-3/4 w-[100%] text-center my-[3rem] flex flex-col lg:gap-[2rem] gap-[1rem]'>
                     <p className='text-[16px] text-richblack-200'>About us</p>
                     <div className='lg:text-[36px] md:text-[32px] text-[28px] leading-[44px] font-semibold text-richblack-5'>Driving Innovation in Online Education for a<HighlightText text={' Brighter Future'} /></div>
                     <div className='lg:text-[16px] md:text-[13px] text-[12px] text-richblack-300 font-semibold'>Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</div>
