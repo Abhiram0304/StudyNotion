@@ -3,8 +3,28 @@ import {settingsEndpoints} from '../APIs'
 import { APIconnector } from '../APIconnector'
 import {logout} from './authAPI'
 import { setUser } from '../../reducer/slices/profileSlice'
+import { useSelector } from 'react-redux'
 
 const {UPDATE_DISPLAY_PICTURE_API,UPDATE_PROFILE_API,CHANGE_PASSWORD_API,DELETE_PROFILE_API} = settingsEndpoints;
+
+export function updateProfileImage(formData,token){
+    return async(dispatch) => {
+        try{
+            const response = await APIconnector("PUT",UPDATE_DISPLAY_PICTURE_API,formData,{"Content-Type":"multipart/form-data",Authorization : `Bearer ${token}`});
+            
+            if(!response.data.success){
+                throw new Error(response?.data?.message);
+            }
+
+            localStorage.setItem("user", JSON.stringify(response?.data?.updatedProfile));
+            await dispatch(setUser(response?.data?.updatedProfile));
+            toast.success("Display Picture Updated SuccessFully");
+        }catch(e){
+            console.log(e);
+            toast.error("Display Picture Cannot Be Uploaded");
+        }
+    }
+}
 
 export function changePassword(data,token){
     return async(dispatch) => {
@@ -70,8 +90,8 @@ export function updateProfile(data,token,navigate){
             console.log(options);
             const response = await APIconnector("PUT",UPDATE_PROFILE_API,options,{Authorization: `Bearer ${token}`});
 
-            // const userImage = response.data.updatedUserDetails.image? response.data.updatedUserDetails.image: `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
-            dispatch(setUser({ ...response.data.updatedUserDetails}));
+            localStorage.setItem("user", JSON.stringify(response?.data?.updatedData));
+            await dispatch(setUser(response?.data?.updatedData));
 
             if(!response.data.success){
                 throw new Error(response.data.message);
@@ -81,7 +101,6 @@ export function updateProfile(data,token,navigate){
 
         }catch(e){
             console.error(e);
-            console.log("Unable to update profile");
             toast.error("Unable to Update Profile");
         }
         navigate("/dashboard/settings");

@@ -28,7 +28,6 @@ exports.auth = async (req,res,next) => {
                 message:"Token is Invalid"
             });
         }
-
         next();
     }
     catch(e){
@@ -70,7 +69,6 @@ exports.isInstructor = async (req,res,next) => {
                 message:"This is a route for Instructors only"
             })
         };
-
         next();
     }
     catch(e){

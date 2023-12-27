@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Course = require('../models/Course');
 const {uploadImage} = require('../utilities/ImageUploader'); 
 
-// already profile in created, while creating the user and is set to NULL, so we just need to update it.
+// already profile is created, while creating the user it is set to NULL, so we just need to update it.
 exports.updateProfile = async (req,res) => {
     try{
         // get data, userId
@@ -35,11 +35,13 @@ exports.updateProfile = async (req,res) => {
         await user.save();
         await profile.save();
 
+        const updatedUserDetails = await User.findById(id).populate("additionalDetails").exec();
+
         // return response
         return res.status(200).json({
             success:true,
             message:"Successfully updated message",
-            profile
+            updatedData : updatedUserDetails,
         })
 
     }catch(e){
@@ -128,7 +130,8 @@ exports.updateDP = async (req,res) => {
 
         return res.status(200).json({
             success:true,
-            message:"Uploaded Display Picture Successfully"
+            message:"Uploaded Display Picture Successfully",
+            updatedProfile : updatedProfile,
         })
     }catch(e){
         return res.status(400).json({

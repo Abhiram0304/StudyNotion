@@ -34,7 +34,6 @@ const Navbar = () => {
     const fetchSubLinks = async () => {
       try {
         const result = await APIconnector('GET', categories.CATEGORIES_API);
-        console.log(result.data.allCategory);
         setSubLinks(result.data.allCategory);
       } catch (e) {
         console.log(e);
@@ -54,32 +53,32 @@ const Navbar = () => {
     <>
       <div className='relative flex h-14 px-[1rem] bg-richblack-900 items-center justify-between border-b-[2px] border-richblack-700 transition-all duration-100'>
         <div className='w-[160px] h-[32px] flex items-center justify-start'>
-          <button onClick={() => setMenuOpen(true)} className='text-[white] text-[1.5rem] font-extrabold md:hidden flex'>
+          <button onClick={() => setMenuOpen(true)} className='text-[white] text-[1.5rem] font-extrabold lg:hidden flex'>
             <FiMenu />
           </button>
           <Link to={'/'}>
             <img
               src={Logo}
               alt='Logo'
-              className='w-[150px] md:flex hidden'
+              className='w-[150px] lg:flex hidden'
               loading='lazy'
             />
           </Link>
         </div>
 
-        <div className={`absolute bg-black top-0 left-0 bottom-0 md:hidden overflow-hidden ${menuOpen ? "w-[60%]" : "w-[0]"} h-[100vh] z-[10] transition-all duration-200`}>
+        <div className={`absolute bg-black top-0 left-0 bottom-0 lg:hidden overflow-hidden ${menuOpen ? "w-[60%]" : "w-[0]"} h-[100vh] z-[10] transition-all duration-200`}>
             <div className='flex flex-col gap-[1.5rem] px-[1rem] py-[3rem] overflow-hidden'>
-              <div className=' bg-[black] text-white absolute right-[1rem] top-[1rem] text-[1.2rem]' onClick={() => setMenuOpen(false)}><ImCross /></div>
-              <div className='w-full mt-[2rem] text-white bg-transparent font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/')} ><div className='flex gap-[0.5rem] justify-center items-center'><FaHome /><p>Home</p></div></div>
-              <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/about')}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></div>
-              <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/contact')}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></div>
+              <div className=' bg-[black] text-white absolute right-[1rem] top-[1rem] md:text-[2rem] text-[1.2rem]' onClick={() => setMenuOpen(false)}><ImCross /></div>
+              <div className='w-full mt-[2rem] text-white bg-transparent font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/')} ><div className='flex gap-[0.5rem] justify-center items-center'><FaHome /><p>Home</p></div></div>
+              <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/about')}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></div>
+              <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/contact')}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></div>
               {
-                token && <div className='w-full text-white font-semibold text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' ><div className='flex gap-[0.5rem] justify-center items-center' onClick={() => handleClose('/dashboard/myProfile')}><RxDashboard /><p>Dashboard</p></div></div>
+                token && <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' ><div className='flex gap-[0.5rem] justify-center items-center' onClick={() => handleClose('/dashboard/myProfile')}><RxDashboard /><p>Dashboard</p></div></div>
               }
             </div>
         </div>
 
-        <div className='md:flex md:visible hidden items-center justify-center gap-[2rem] text-white transition-all duration-200'>
+        <div className='lg:flex lg:visible hidden items-center justify-center gap-[2rem] text-white transition-all duration-200'>
           {NavbarLinks.map((each, index) => {
             return (
               each.title !== 'Catalog' ? (
@@ -118,6 +117,7 @@ const Navbar = () => {
             );
           })}
         </div>
+        
         <div className='flex gap-[8px] items-center justify-center'>
           {user && user.accountType !== 'Instructor' && (
             <Link to='/dashboard/cart' className='relative'>

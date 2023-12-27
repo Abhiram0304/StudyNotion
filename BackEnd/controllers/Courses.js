@@ -8,13 +8,13 @@ require('dotenv').config();
 exports.createCourse = async (req,res) => {
     try{
        // fetch data
-       const {courseName,courseDescription,whatYouWillLearn,price,category} = req.body;
+       const {courseName,courseDescription,whatYouWillLearn,price,category,tags,instructions} = req.body;
 
        // get thumbnail
-       const thumbnail = req.files.thumbnailImage;
+       const thumbnail = req.files.thumbnail;
 
       // validation
-      if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail){
+      if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !tags || !instructions){
         return res.status(400).json({
             success:false,
             message:"All fields are required"
@@ -43,9 +43,9 @@ exports.createCourse = async (req,res) => {
 
       // Upload image to cloudinary
       const thumbnailImage = await uploadImage(thumbnail,process.env.FOLDER_NAME);
-
+    
       // create an entry for new post
-      const newCourse = await Course.create({courseName,courseDescription,instructor:instructor._id,whatYouWillLearn,price,categeory:categoryDetails._id,thumbnail:thumbnailImage.secure_url});
+      const newCourse = await Course.create({courseName,courseDescription,instructor:instructor._id,whatYouWillLearn,price,categeory:categoryDetails._id,thumbnail:thumbnailImage.secure_url,instructions:instructions,tags:tags});
 
       // update Instructor user schema with new course
       await User.findByIdAndUpdate({_id:instructor._id},{$push:{courses:newCourse._id}},{new:true});

@@ -15,8 +15,6 @@ const VerifyEmail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(signupData);
-
   useEffect(() => {
     if(!signupData){
       navigate("/signup");
@@ -25,7 +23,6 @@ const VerifyEmail = () => {
   },[])
 
   const handleVerifyAndSubmit = (e) => {
-    console.log("first");
     e.preventDefault();
     const {firstName,lastName,accountType,email,createPassword,confirmPassword} = signupData;
 
@@ -36,18 +33,18 @@ const VerifyEmail = () => {
     <div className='w-[100vw] min-h-[100vh] bg-richblack-900 flex'>
       {
         loading ? 
-        (<div class="custom-loader absolute top-[45%] left-[48%]"></div>)
+        (<div className="custom-loader absolute top-[45%] left-[48%]"></div>)
         : 
         (
-          <div className='flex flex-col gap-[1rem] mx-auto mt-[10rem] lg:max-w-[450px] md:max-w-[420px] max-w-4/5'>
+          <div className='flex flex-col gap-[1rem] md:px-[0] px-[1rem] mx-auto mt-[10rem] lg:max-w-[450px] md:max-w-[420px] max-w-4/5 overflow-hidden'>
             <div className='text-richblack-5 font-semibold text-[34px] tracking-wide'>Verify Email</div>
             <p className='text-[18px] text-richblack-100 leading-[26px]'>A verification code has been sent to you. Enter the code below</p>
             <form className='flex flex-col'>
               <OTPInput value={OTP} onChange={setOTP} numInputs={6} 
               renderInput={(props) => 
               <input {...props} placeholder='-' />} 
-              inputStyle={{width:"50px",height:"50px",borderRadius:"0.5rem",backgroundColor:"#161D29",borderBottom:"2px solid #424854",color:"#F1F2FF",}}
-              containerStyle={{justifyContent:"space-between",gap:"0 6px",}}
+              inputStyle={{width:"15%",height:"50px",maxHeight:"50px",maxWidth:"50px",borderRadius:"0.5rem",backgroundColor:"#161D29",borderBottom:"2px solid #424854",color:"#F1F2FF",}}
+              containerStyle={{justifyContent:"space-between",gap:"0.6px",}}
               shouldAutoFocus={true}
               />
               <button className='mt-[2rem]' onClick={handleVerifyAndSubmit}><Button active={true}>Verify and Register</Button></button>

@@ -6,45 +6,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import countryCode from '../../data/countrycode.json';
 import { useNavigate } from 'react-router-dom';
 import {updateProfile} from '../../services/operations/settingsAPI';
+import { setUser } from '../../reducer/slices/profileSlice';
 
 const EditProfile = () => {
 
     const {user} = useSelector((state) => state.profile);
     const {token} = useSelector((state) => state.auth);
 
-    const {register,handleSubmit,reset,formState:{errors,isSubmitSuccessful}} = useForm();
+    const {register,handleSubmit,reset,formState:{errors}} = useForm();
 
-    // useEffect(() => {
-    //     if(isSubmitSuccessful){
-    //         reset({
-    //             firstName:user?.firstName,
-    //             lastName:user?.lastName,
-    //             gender:user?.additionalDetails?.gender,
-    //             dateOfBirth:user?.additionalDetails?.dateOfBirth,
-    //             countryCode:user?.additionalDetails?.countryCode,
-    //             phoneNumber:user?.additionalDetails?.phoneNumber,
-    //             about:user?.additionalDetails?.about,
-    //         })
-    //     }
-    // },[isSubmitSuccessful,reset]);
+    useEffect(() => {
+            reset({
+                firstName:user?.firstName,
+                lastName:user?.lastName,
+                gender:user?.additionalDetails?.gender,
+                dateOfBirth:user?.additionalDetails?.dateOfBirth,
+                countryCode:user?.additionalDetails?.countryCode,
+                phoneNumber:user?.additionalDetails?.phoneNumber,
+                about:user?.additionalDetails?.about,
+            })
+    },[user,reset]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const submitUpdateProfileHandler = async (data) => {
-        console.log(data);
+    const submitUpdateProfileHandler = async(data) => {
         dispatch(updateProfile(data,token,navigate));
-        console.log("user : ",user?.additionalDetails);
     }
 
     function cancelHandler(e){
         e.preventDefault();
         navigate('/dashboard/myProfile');
     }
-
-    useEffect(() => {
-        console.log(user?.additionalDetails?.gender);
-    },[]);
 
   return (
     <form className='flex w-full flex-col gap-[1rem]'>

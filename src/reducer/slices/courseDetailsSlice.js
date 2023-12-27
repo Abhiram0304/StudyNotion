@@ -24,7 +24,7 @@ const courseDetailsSlice = createSlice({
             state.totalNoOfLectures = value.payload
         },
         updateCompleteCourse(state,value){
-            state.completedLectures = [...completedLectures,value.payload]
+            state.completedLectures = [...state.completedLectures,value.payload]
         },
     }
 })
