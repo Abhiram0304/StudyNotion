@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
-
+import { useSelector } from 'react-redux';
 
 const InstructionField = ({name,label,errors,register,setValue,placeholder}) => {
 
     const [instructionsList,setInstructionsList] = useState([]);
     const [instruction,setInstruction] = useState("");
+    const {editCourse,course} = useSelector((state) => state.course);
 
     useEffect(() => {
+        if(editCourse){
+            setInstructionsList(JSON.parse(course?.instructions[0]));
+        }
+        register(name,{required:true,validate:(value) => value.length>0});
+    },[]);
+
+    useEffect(() => {        
         setValue(name,instructionsList);
     },[instructionsList]);
 
@@ -37,7 +45,7 @@ const InstructionField = ({name,label,errors,register,setValue,placeholder}) => 
         <div className='flex flex-col justify-center items-start gap-[0.25rem]'>
             {
                 instructionsList.map((inst,index) => (
-                    <div className='max-w-[100%] px-[0.5rem] py-[0.25rem] flex gap-[1rem] justify-center items-center rounded-lg bg-richblack-700 text-richblack-5 text-[14px]'>
+                    <div key={index} className='max-w-[100%] px-[0.5rem] py-[0.25rem] flex gap-[1rem] justify-center items-center rounded-lg bg-richblack-700 text-richblack-5 text-[14px]'>
                         <div className='w-full break-words'>{inst}</div>
                         <div onClick={() => removeInstruction(index)}><RxCross2 /></div>
                     </div>

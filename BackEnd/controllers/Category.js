@@ -1,5 +1,10 @@
+const { current } = require('@reduxjs/toolkit');
 const Category = require('../models/Category');
 const Course = require('../models/Course');
+
+function getRandomInt(n){
+    return Math.floor(Math.random() * n);
+}
 
 exports.createCategory = async (req,res) => {
     try{
@@ -49,25 +54,42 @@ exports.getCategoryPageDetails = async (req,res) => {
     try{
         // get category id
         const {categoryId} = req.body;
+
         // fetch all courses corresponding to that category
-        const currentCategory = await Category.findById(categoryId).populate("course").exec();
+        const currentCategory = await Category.findById({_id:categoryId}).populate({path:"course",populate:"ratingAndReviews",populate:"instructor"}).exec();
+
         // validation
         if(!currentCategory){
-            return res.status(400).json({
+            return res.status(404).json({
                 success:false,
-                message:"Courses not Found for this Category"
+                message:"Category Not Found"
             })
         }
+        if(currentCategory.length==0){
+            return res.status(404).json({
+                success:false,
+                message:"No Courses present in this category",
+            })
+        }
+
         // get courses from other categories
-        const otherCategory = await Category.findById({_id:{$ne:categoryId}}).populate("course").exec();
+        const otherThanCurrentCategory = await Category.find({_id:{$ne:categoryId}});
+        const otherCategoryCourse = await Category.findOne(otherThanCurrentCategory[getRandomInt(otherThanCurrentCategory.length)]._id).populate({path:"course",populate:"ratingAndReviews",populate:"instructor"}).exec();
+
         // get top selling courses
-        const topSellingCourses = await Course.find({}).sort({studentsEnrolled:"desc"}).limit(10);
+        const topSellingCourses = await Course.find()
+                                    .sort({ "studentsEnrolled" : -1 })
+                                    .limit(10)
+                                    .populate("instructor")
+                                    .populate("ratingAndReviews")
+                                    .exec();
+                                
         // return response
         res.status(200).json({
-            success:true.valueOf,
+            success:true,
             message:"Found category page details",
-            recommandation:{
-                currentCategory,otherCategory,topSellingCourses
+            coursesList:{
+                currentCategory,otherCategoryCourse,topSellingCourses
             }
         })
     }catch(e){

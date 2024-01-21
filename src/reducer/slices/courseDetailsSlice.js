@@ -29,5 +29,5 @@ const courseDetailsSlice = createSlice({
     }
 })
 
-export const {setCompletedCourse,setCourseDetails,setCourseSectionData,setTotalNoOfLectures,updateCompleteCourse} = courseDetailsSlice.actions;
+export const {setCompleteLectures,setCourseDetails,setCourseSectionData,setTotalNoOfLectures,updateCompleteCourse} = courseDetailsSlice.actions;
 export default courseDetailsSlice.reducer;

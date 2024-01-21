@@ -144,24 +144,64 @@ exports.updateDP = async (req,res) => {
 exports.getEnrolledCourses = async (req,res) => {
     try{
         const userId = req.user.id;
-        let findUser = await User.findOne({_id:userId});
+        const details = await User.findOne({_id:userId}).populate({path:"courses",populate:{path:"courseContent",populate:{path:"subSection"}}})
+                                                       .exec();
 
-        if(!findUser){
+        if(!details){
             return res.status(404).json({
                 success:false,
                 message:"User Not Found",
+
             })
         }
 
         return res.status(200).json({
             success:true,
             message:"Data found",
-            data:findUser.courses,
+            data:details.courses,
         })
     }catch(e){
         return res.status(400).json({
             success:false,
             message:e.message,
+        })
+    }
+}
+
+exports.getInstructorData = async (req,res) => {
+    try{
+        const userId = req.user.id;
+        const courses = await Course.find({instructor : userId}).populate("instructor").populate("ratingAndReviews").exec();
+
+        const completeData = courses.map((course,i) => {
+            const totalEnrolledStudent = course?.studentsEnrolled?.length;
+            const totalIncome = totalEnrolledStudent * course?.price;
+            
+            const courseDataWithStats = {
+                courseId : course._id,
+                courseName : course?.courseName,
+                courseDescription : course?.courseDescription,
+                instructor : course?.instructor,
+                ratingsAndReviews:course?.ratingAndReviews,
+                thumbnail:course?.thumbnail,
+                price:course?.price,
+                totalEnrolledStudent,
+                totalIncome,
+            }
+
+            return courseDataWithStats;
+        });
+
+        return res.status(200).json(({
+            success:true,
+            message:"SuccessFully fetched the data",
+            data:completeData,
+        }));
+        
+    }catch(e){
+        return res.status(400).json({
+            success:false,
+            message:"Unable to fetch the data",
         })
     }
 }

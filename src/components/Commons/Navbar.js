@@ -32,10 +32,10 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchSubLinks = async () => {
-      try {
+      try{
         const result = await APIconnector('GET', categories.CATEGORIES_API);
         setSubLinks(result.data.allCategory);
-      } catch (e) {
+      }catch(e){
         console.log(e);
       }
     };
@@ -51,7 +51,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='relative flex h-14 px-[1rem] bg-richblack-900 items-center justify-between border-b-[2px] border-richblack-700 transition-all duration-100'>
+      <div className='relative flex h-[3.5rem] px-[1rem] bg-richblack-900 items-center justify-between border-b-[2px] border-richblack-700 transition-all duration-100'>
         <div className='w-[160px] h-[32px] flex items-center justify-start'>
           <button onClick={() => setMenuOpen(true)} className='text-[white] text-[1.5rem] font-extrabold lg:hidden flex'>
             <FiMenu />
@@ -103,7 +103,7 @@ const Navbar = () => {
                   <div className='absolute rounded-md left-[-30%] top-[140%] w-auto min-w-[250px] px-[1rem] py-[1rem] transition-all duration-200 bg-white text-richblack-700 flex flex-col z-[3] gap-[8px] invisible group-hover:visible'>
                     {subLinks.map((each, index) => {
                       return (
-                        <Link key={index}>
+                        <Link to={`catalog/${each.name.split(" ").join("").toLowerCase()}`} key={index}>
                           <div className='hover:scale-105 transition-all duration-200'>
                             {each.name}
                           </div>

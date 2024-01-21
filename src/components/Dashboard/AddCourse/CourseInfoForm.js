@@ -9,8 +9,7 @@ import InstructionField from './InstructionField';
 import Button from '../../HomePage/Button';
 import { MdNavigateNext } from "react-icons/md";
 import { addCourseDetails } from '../../../services/operations/courseDetailsAPI';
-import { categories } from '../../../services/APIs';
-import { setStage,setCourse } from '../../../reducer/slices/courseSlice';
+import { setStage,setCourse,setEditCourse } from '../../../reducer/slices/courseSlice';
 
 const CourseInfoForm = () => {
 
@@ -19,9 +18,10 @@ const CourseInfoForm = () => {
 
     const dispatch = useDispatch();
     const {token} = useSelector((state) => state.auth);
-    const {course,editCourse,stage} = useSelector((state) => state.course);
+    const {course,editCourse} = useSelector((state) => state.course);
+    // console.log("INSIDE : ",course);
 
-    const {register,handleSubmit,setValue,getValues,formState:{errors,isSubmitSuccessful}} = useForm();
+    const {register,handleSubmit,getValues,setValue,formState:{errors}} = useForm();
 
     useEffect(() => {
         const getCategories = async() => {
@@ -52,7 +52,7 @@ const CourseInfoForm = () => {
 
     useEffect(() => {
         if(editCourse){
-            setTagsList(course?.tag);
+            setTagsList(JSON.parse(course?.tags));
         }
         register("tags",{required:true,validate:(value) => value.length>0});
     },[]);
@@ -96,7 +96,7 @@ const CourseInfoForm = () => {
     <div className='w-full flex flex-col gap-[2rem]'>
         <form className='w-full px-[1rem] py-[1rem] rounded-lg bg-richblack-800 flex flex-col gap-[1rem] my-[1rem]' >
             <label className='flex flex-col gap-[2px]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Name<p className='text-[red]'>*</p></p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Name<p className='text-[red]'>*</p></div>
                 <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='courseName' placeholder='Enter Course Name' {...register("courseName",{required:true})}/>
                 {
                     errors.courseName && (
@@ -107,7 +107,7 @@ const CourseInfoForm = () => {
                 }
             </label>
             <label className='flex flex-col gap-[2px]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Short Description<p className='text-[red]'>*</p></p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Short Description<p className='text-[red]'>*</p></div>
                 <textarea rows={3} className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='courseDescription' placeholder='Course Description' {...register("courseDescription",{required:true})} />
                 {
                     errors.courseDescription && (
@@ -118,7 +118,7 @@ const CourseInfoForm = () => {
                     }
             </label>
             <label className='flex flex-col gap-[2px]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Price<p className='text-[red]'>*</p></p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Price<p className='text-[red]'>*</p></div>
                 <div className='relative w-full bg-richblack-800 '>
                     <input className='w-full bg-richblack-700 pl-[2rem] border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='price' placeholder='Enter Price' {...register("price",{required:true,valueAsNumber:true})} />
                     {
@@ -133,7 +133,7 @@ const CourseInfoForm = () => {
             </label>
             
             <label className='flex flex-col gap-[2px]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Category</p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Category</div>
                 <select {...register("category",{required:true})} className='w-full px-2 py-1 bg-richblack-700 border-b-[2px] text-[14px] border-richblack-400 text-richblack-200 rounded-md' type='text' name='category' placeholder='select category'>
                     {
                         courseCategories.map((courseCat,index) => {
@@ -153,7 +153,7 @@ const CourseInfoForm = () => {
             </label> 
 
             <label className='flex flex-col gap-[0.5rem]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Tags</p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Tags</div>
                 <div className='w-full flex flex-wrap gap-[0.5rem] items-center justify-start'>
                         {
                             tagsList.map((tag,index) => (
@@ -171,13 +171,15 @@ const CourseInfoForm = () => {
                 name={"thumbnail"}
                 label={"Course Thumbnail"}
                 setValue={setValue}
+                getValues={getValues}
                 register={register}
                 video={false}
                 errors={errors}
+                editCourse = {editCourse}
              />   
 
             <label className='flex flex-col gap-[2px]'>
-                <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Benefits of the Course<p className='text-[red]'>*</p></p>
+                <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Benefits of the Course<p className='text-[red]'>*</p></div>
                 <textarea rows={3} className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='whatYouWillLearn' placeholder='Enter the Benefits of the Course' {...register("whatYouWillLearn",{required:true})} />
                 {
                     errors.whatYouWillLearn && (
@@ -199,7 +201,7 @@ const CourseInfoForm = () => {
         </form>
         <div className='w-full flex justify-end items-center' onClick={handleSubmit(nextStepHandler)}>
             <Button active={true}>
-                <p>Next</p>
+                <p>Save & Next</p>
                 <MdNavigateNext />
             </Button>
         </div>

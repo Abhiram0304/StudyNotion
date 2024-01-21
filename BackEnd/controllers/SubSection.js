@@ -6,12 +6,12 @@ require('dotenv').config();
 
 exports.createSubSection  = async (req,res) => {
     try{
-        const {sectionId,title,timeDuration,description} = req.body;
+        const {sectionId,title,description} = req.body;
 
         // fetch video and upload to cloudinary
-        const video = req.files.videoFile;
+        const video = req.files.video;
 
-        if(!title || !timeDuration || !description || !sectionId || !video){
+        if(!title || !description || !sectionId || !video){
             return res.status(400).json({
                 success:false,
                 message:"Fill all the given fields"
@@ -20,9 +20,8 @@ exports.createSubSection  = async (req,res) => {
 
         const uploadVideo = await uploadImage(video,process.env.FOLDER_NAME);
 
-        const createdSubSection = await SubSection.create({title:title,description:description,timeDuration:timeDuration,videoUrl:uploadVideo.secure_url});
-
-        const updatedSection = await Section.findByIdAndUpdate(sectionId,{$push:{subSection:createdSubSection._id}},{new:true}).populate("subSection").exec();
+        const createdSubSection = await SubSection.create({title:title,description:description,timeDuration:uploadVideo.duration,videoUrl:uploadVideo.secure_url});
+        const updatedSection = await Section.findByIdAndUpdate({_id:sectionId},{$push:{subSection:createdSubSection._id}},{new:true}).populate('subSection').exec();
 
         return res.status(200).json({
             success:true,
@@ -91,9 +90,7 @@ exports.deleteSubSection = async (req,res) => {
     try{
         const {sectionId,subSectionId} = req.body;
 
-        await Section.findByIdAndUpdate({sectionId},{$pull:{SubSection:subSectionId}});
-
-        const subSection = await SubSection.findByIdAndDelete({subSectionId});
+        const subSection = await SubSection.findByIdAndDelete({_id:subSectionId});
         if(!subSection){
             return res.status(404).json({
                 success:false,
@@ -101,12 +98,13 @@ exports.deleteSubSection = async (req,res) => {
             })
         }
         
-        const updatedSection = await SubSection.findById(sectionId).populate("subSection");
+        const updatedSection = await Section.findByIdAndUpdate({_id:sectionId},{$pull:{subSection:subSectionId}},{new:true}).populate('subSection').exec();
 
+        console.log("Updated Section",updatedSection);
         return res.status(200).json({
             success:true,
             message:"Deleted Sub Section Successfully",
-            data:updatedSection
+            updatedSection
         })
         
     }catch(e){

@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 
 const initialState = {
-    cartItems:localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")):[], 
-    totalPrice:localStorage.getItem("totalPrice") ? JSON.parse(localStorage.getItem("totalPrice")) : (0),
-    totalItems : localStorage.getItem("totalItems") ? (JSON.parse(localStorage.setItem("totalItems"))) : (0),
+    cartItems : localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [], 
+    totalPrice : localStorage.getItem("totalPrice") ? JSON.parse(localStorage.getItem("totalPrice")) : (0),
+    totalItems : localStorage.getItem("totalItems") ? (JSON.parse(localStorage.getItem("totalItems"))) : (0),
 }
 
 const cartSlice = createSlice({
@@ -13,18 +13,18 @@ const cartSlice = createSlice({
     reducers:{
         addToCart : (state,action) => {
             const course = action.payload;
-            const index = state.cart.findIndex((item) => item._id === course._id);
+            const index = state.cartItems.findIndex((item) => item._id === course._id);
 
             if(index>=0){
                 toast.error("Course already in Cart");
                 return;
             }
 
-            state.cart.push(course);
+            state.cartItems.push(course);
 
             state.totalItems++;
 
-            state.totalPrice = state.totalItems + course.price;
+            state.totalPrice = state.totalPrice + course.price;
 
             localStorage.setItem("cartItems",JSON.stringify(state.cartItems));
             localStorage.setItem("totalItems",JSON.stringify(state.totalItems));
@@ -34,12 +34,12 @@ const cartSlice = createSlice({
         },
         removeFromCart : (state,action) => {
             const courseId = action.payload;
-            const index = state.cart.findIndex((item) => item._id === courseId);
+            const index = state.cartItems.findIndex((item) => item._id === courseId);
 
             if(index>=0){
                 state.totalItems--;
-                state.totalPrice = state.totalPrice - state.cart[index].price;
-                state.cart.splice(index,1);
+                state.totalPrice = state.totalPrice - state.cartItems[index].price;
+                state.cartItems.splice(index,1);
                 
                 localStorage.setItem("cartItems",JSON.stringify(state.cartItems));
                 localStorage.setItem("totalItems",JSON.stringify(state.totalItems));
@@ -60,5 +60,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const {addToCart,totalItems,totalPrice} = cartSlice.actions;
+export const {addToCart,removeFromCart,totalItems,totalPrice,cartItems,resetCart} = cartSlice.actions;
 export default cartSlice.reducer;

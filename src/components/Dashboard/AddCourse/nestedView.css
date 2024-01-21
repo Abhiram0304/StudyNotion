@@ -1,0 +1,13 @@
+details {
+    padding: 10px;
+  }
+  
+  details summary {
+    cursor: pointer;
+    margin-bottom: -10px;
+    transition: margin 150ms ease-out;
+  }
+  
+  details[open] summary {
+    margin-bottom: 10px;
+  }

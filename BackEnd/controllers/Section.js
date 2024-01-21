@@ -51,18 +51,15 @@ exports.updateSection = async (req,res) => {
         }
 
         // update data
-        const updatedSection = await Section.findByIdAndUpdate({sectionId},{sectionName:sectionName},{new:true});
-
-        const updatedCourse = await Course.findById(courseId).populate({path:"CourseContent",populate:{path:"subSection"}});
-
+        await Section.findByIdAndUpdate({_id:sectionId},{sectionName:sectionName},{new:true});
+        
+        const updatedCourse = await Course.findById({_id:courseId}).populate({path : 'courseContent', populate:{path : "subSection"}}).exec();
+        
         // return response
         return res.status(200).json({
             success:true,
             message:"updated Section Successfully",
-            data:{
-                updatedCourse:updatedCourse,
-                updatedSection:updatedSection
-            }
+            data:updatedCourse,
         })
     }catch(e){
         return res.status(400).json({
@@ -97,7 +94,7 @@ exports.deleteSection = async (req,res) => {
         return res.status(200).json({
             success:true,
             message:"deleted Section Successfully",
-            updatedCourse
+            data : updatedCourse
         })
 
     }catch(e){

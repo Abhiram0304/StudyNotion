@@ -1,9 +1,10 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Button from '../HomePage/Button'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../services/operations/authAPI';
 import LogOutModal from '../Dashboard/LogOutModal';
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 const ProfileDropDown = () => {
 
@@ -13,6 +14,8 @@ const ProfileDropDown = () => {
   const { user } = useSelector((state) => state.profile)
 
   const [openModal,setOpenModal] = useState(null);
+
+  const {totalItems} = useSelector((state) => state.cart);
 
   return (
     <>
@@ -36,7 +39,10 @@ const ProfileDropDown = () => {
           </div>
           <div className='md:flex hidden justify-center items-center'><Button active={true} linkedTo={"/dashboard/myProfile"}>Dashboard</Button></div>
         </div>        
-        
+        <div className='relative' onClick={() => navigate('/dashboard/cart')}>
+          <MdOutlineShoppingCart className='text-[1.75rem] text-richblack-5' />
+          {totalItems>0 && <div className='absolute top-[-0.4rem] right-[-0.2rem] text-richblack-900 text-[0.8rem] h-[1rem] w-[1rem] font-semibold text-center rounded-full bg-yellow-5'>{totalItems}</div> }
+        </div>
         <div className='flex justify-center items-center'>
           <img className='w-[30px] h-[30px] rounded-full' src={user?.image} />
         </div>
