@@ -1,4 +1,3 @@
-const { current } = require('@reduxjs/toolkit');
 const Category = require('../models/Category');
 const Course = require('../models/Course');
 
