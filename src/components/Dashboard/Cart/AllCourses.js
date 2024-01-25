@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DateFormat } from '../../../utilities/DateFormat';
 import { TbTrash } from "react-icons/tb";
 import { removeFromCart } from '../../../reducer/slices/cartSlice';
-import toast from 'react-hot-toast';
 
 const AllCourses = () => {
 
   const {cartItems} = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  console.log("CATR ITEMS  : ",cartItems);
 
   const removeFromCartHandler = async(courseId) => {
     await dispatch(removeFromCart(courseId));

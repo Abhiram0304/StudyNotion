@@ -23,11 +23,11 @@ const courseDetailsSlice = createSlice({
         setTotalNoOfLectures(state,value){
             state.totalNoOfLectures = value.payload
         },
-        updateCompleteCourse(state,value){
+        updateCompleteLectures(state,value){
             state.completedLectures = [...state.completedLectures,value.payload]
         },
     }
 })
 
-export const {setCompleteLectures,setCourseDetails,setCourseSectionData,setTotalNoOfLectures,updateCompleteCourse} = courseDetailsSlice.actions;
+export const {setCompleteLectures,setCourseDetails,setCourseSectionData,setTotalNoOfLectures,updateCompleteLectures} = courseDetailsSlice.actions;
 export default courseDetailsSlice.reducer;

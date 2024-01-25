@@ -13,11 +13,11 @@ const DropDown = ({section}) => {
             {
               isSectionActive ? (<FaChevronUp className='text-richblack-200' />) : (<FaChevronDown className='text-richblack-200' />)
             }
-            <p className='text-richblack-5'>{section?.sectionName}</p>
+            <p className='text-richblack-5 font-semibold'>{section?.sectionName}</p>
         </div>
         <div className='flex justify-end items-center text-[18px] gap-[1rem]'>
-            <div className='text-yellow-50'>{section?.subSection?.length} Lectures</div>
-            <div className='text-richblack-25'>51 min</div>
+            <h1 className='text-yellow-50 font-semibold'>{section?.subSection?.length} Lectures</h1>
+            {/* <div className='text-richblack-25'>51 min</div> */}
         </div>
       </div>
       {

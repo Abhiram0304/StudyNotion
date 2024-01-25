@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import RatingStars from './RatingStars';
+import GetAvgRating from '../../utilities/getAvgRating';
 
-const CourseCard = ({course,height,bestSelling=false}) => {
-    console.log(course);
+const CourseCard = ({course,height}) => {
+
+    const [avgRating,setAvgRating] = useState(1);
+
+    useEffect(() => {
+        const count = GetAvgRating(course?.ratingAndReviews);
+        setAvgRating(count);
+    },[course]);
+
   return (
     <>
         <Link to={`/courses/${course?._id}`}>
@@ -21,8 +29,8 @@ const CourseCard = ({course,height,bestSelling=false}) => {
                         </div>
                     </div>
                     <div className='flex gap-[1rem] text-richblack-100 justify-start items-center'>
-                        <RatingStars />
-                        <p className='text-[white]'>(100)</p>
+                        <RatingStars reviewCount={avgRating} />
+                        <p className='text-richblack-100'>({course?.ratingAndReviews?.length || 0}) Ratings</p>
                     </div>
                     <div className='text-richblack-5 text-[20px] font-semibold font-edu-sa'>Rs.{course?.price}</div>
                 </div>

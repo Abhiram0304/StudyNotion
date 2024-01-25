@@ -1,0 +1,10 @@
+input:checked::before {
+    content: '✔'; 
+    font-size: 1rem;
+    color: rgb(55, 230, 163); 
+    display: flex;
+    font-weight: 900;
+    align-items: center;
+    justify-content: center;
+  }
+  

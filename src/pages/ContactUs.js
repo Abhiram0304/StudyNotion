@@ -16,7 +16,7 @@ const ContactUs = () => {
                         <div className='flex flex-col gap-[2px]'>
                             <h1 className='font-semibold tracking-wide text-[18px] text-richblack-5'>Chat with Us</h1>
                             <p className='text-[14px]'>Our friendly team is here to help.</p>
-                            <p className='text-[14px] font-semibold'>tanneriabhi@gmail.com</p>
+                            <p className='text-[14px] font-semibold'>tanneriabhiram@gmail.com</p>
                         </div> 
                     </div>
                     <div className='flex gap-[1rem] items-start justify-start'>
@@ -32,7 +32,7 @@ const ContactUs = () => {
                         <div className='flex flex-col gap-[2px]'>
                             <h1 className='font-semibold tracking-wide text-[18px] text-richblack-5'>Call us</h1>
                             <p className='text-[14px]'>We are available 24/7</p>
-                            <p className='text-[14px] font-semibold'>+91 7478327532</p>
+                            <p className='text-[14px] font-semibold'>+91 7478xxxxxx</p>
                         </div>
                     </div>
                 </div>

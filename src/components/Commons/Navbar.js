@@ -12,9 +12,10 @@ import Button from '../HomePage/Button';
 import { ImCross } from "react-icons/im";
 import { FiMenu } from "react-icons/fi";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { MdContactSupport } from "react-icons/md";
+import { MdContactSupport, MdMenu } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
+import { BsGrid1X2Fill } from "react-icons/bs";
 
 const Navbar = () => {
   const location = useLocation();
@@ -44,7 +45,6 @@ const Navbar = () => {
   }, []);
 
   function handleClose(path){
-    console.log(path);
     navigate(path);
     setMenuOpen(false);
   }
@@ -70,11 +70,26 @@ const Navbar = () => {
             <div className='flex flex-col gap-[1.5rem] px-[1rem] py-[3rem] overflow-hidden'>
               <div className=' bg-[black] text-white absolute right-[1rem] top-[1rem] md:text-[2rem] text-[1.2rem]' onClick={() => setMenuOpen(false)}><ImCross /></div>
               <div className='w-full mt-[2rem] text-white bg-transparent font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/')} ><div className='flex gap-[0.5rem] justify-center items-center'><FaHome /><p>Home</p></div></div>
-              <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/about')}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></div>
-              <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/contact')}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></div>
+              <div className='w-full text-white font-semibold md:text-[2rem] text-[1rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/about')}><div className='flex gap-[0.5rem] justify-center items-center'><BsFillInfoCircleFill /><p>About Us</p></div></div>
+              <div className='w-full text-white font-semibold md:text-[2rem] text-[1rem] flex justify-start items-center hover:scale-105 transition-all duration-200' onClick={() => handleClose('/contact')}><div className='flex gap-[0.5rem] justify-center items-center'><MdContactSupport /><p>Contact Us</p></div></div>
               {
-                token && <div className='w-full text-white font-semibold md:text-[2rem] text-[1.2rem] flex justify-start items-center hover:scale-105 transition-all duration-200' ><div className='flex gap-[0.5rem] justify-center items-center' onClick={() => handleClose('/dashboard/myProfile')}><RxDashboard /><p>Dashboard</p></div></div>
+                token && <div className='w-full text-white font-semibold md:text-[2rem] text-[1rem] flex justify-start items-center hover:scale-105 transition-all duration-200' ><div className='flex gap-[0.5rem] justify-center items-center' onClick={() => handleClose('/dashboard/myProfile')}><RxDashboard /><p>Dashboard</p></div></div>
               }
+              <div className='w-full text-white border-t-[2px] border-b-[2px] border-richblack-600 py-[1rem] font-bold md:text-[2rem] text-[1rem] flex flex-col gap-[1rem] justify-start items-start'>
+                <p className='flex gap-[0.5rem] justify-start items-center'><BsGrid1X2Fill />Catalog</p>
+                <div className='w-full flex flex-col justify-center items-center gap-[0.5rem]'>
+                  {
+                    subLinks.map((each, index) => {
+                        return (
+                          <Link onClick={() => setMenuOpen(false)} to={`catalog/${each.name.split(" ").join("").toLowerCase()}`} key={index}>
+                            <div className='md:text-[1rem] text-[0.75rem] text-richblack-100 text-center hover:scale-105 transition-all duration-200'>
+                              {each.name}
+                            </div>
+                          </Link>
+                        );
+                  })}
+                </div>
+              </div>
             </div>
         </div>
 

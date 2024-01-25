@@ -13,7 +13,6 @@ exports.createCourse = async (req,res) => {
     try{
        // fetch data
        const {courseName,courseDescription,whatYouWillLearn,price,category,tags,instructions} = req.body;
-
        // get thumbnail
        const thumbnail = req.files.thumbnail;
 
@@ -49,7 +48,8 @@ exports.createCourse = async (req,res) => {
       const thumbnailImage = await uploadImage(thumbnail,process.env.FOLDER_NAME);
     
       // create an entry for new post
-      const newCourse = await Course.create({courseName,courseDescription,instructor:instructor._id,whatYouWillLearn,price,categeory:categoryDetails._id,thumbnail:thumbnailImage.secure_url,instructions:instructions,tags:tags,status:"Draft"});
+      const newCourse = await Course.create({courseName,courseDescription,instructor:instructor._id,whatYouWillLearn,price,category:categoryDetails._id,thumbnail:thumbnailImage.secure_url,instructions:instructions,tags:tags,status:"Draft"}); 
+      console.log("NEW COURSE :",newCourse);
 
       // update Instructor user schema with new course
       await User.findByIdAndUpdate({_id:instructor._id},{$push:{courses:newCourse._id}},{new:true});
@@ -230,7 +230,6 @@ exports.getInstructorCourses = async(req,res) => {
         const instructorId = req.user.id;
         
         const instructorCourses = await Course.find({instructor:instructorId}).sort({createdAt : -1}).populate("ratingAndReviews").populate("instructor").exec();
-
         return res.status(200).json({
             success:true,
             message:"Successfully fetched all Instructor Courses",

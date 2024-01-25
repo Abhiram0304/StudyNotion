@@ -72,7 +72,6 @@ export function deleteAccount(token,navigate){
     }
 }
 
-// NOT COMPLETED
 export function updateProfile(data,token,navigate){
     return async(dispatch) => {
         const toastId = toast.loading("Please Wait...");

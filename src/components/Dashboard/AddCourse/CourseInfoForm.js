@@ -19,7 +19,6 @@ const CourseInfoForm = () => {
     const dispatch = useDispatch();
     const {token} = useSelector((state) => state.auth);
     const {course,editCourse} = useSelector((state) => state.course);
-    // console.log("INSIDE : ",course);
 
     const {register,handleSubmit,getValues,setValue,formState:{errors}} = useForm();
 
@@ -32,6 +31,7 @@ const CourseInfoForm = () => {
         }
 
         if(editCourse){
+            console.log("Course : ",course);
             setValue("courseName",course.courseName);
             setValue("courseDescription",course.courseDescription);
             setValue("instructor",course.instructor);
@@ -40,7 +40,7 @@ const CourseInfoForm = () => {
             setValue("ratingAndReviews",course.ratingAndReviews);
             setValue("price",course.price);
             setValue("thumbnail",course.thumbnail);
-            setValue("category",course.category);
+            setValue("category",course.category._id);
             setValue("courseTags",course.tags);
             setValue("studentsEnrolled",course.studentsEnrolled);
             setValue("instructions",course.instructions);
@@ -52,7 +52,7 @@ const CourseInfoForm = () => {
 
     useEffect(() => {
         if(editCourse){
-            setTagsList(JSON.parse(course?.tags));
+            setTagsList(course?.tags);
         }
         register("tags",{required:true,validate:(value) => value.length>0});
     },[]);
@@ -134,7 +134,7 @@ const CourseInfoForm = () => {
             
             <label className='flex flex-col gap-[2px]'>
                 <div className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Course Category</div>
-                <select {...register("category",{required:true})} className='w-full px-2 py-1 bg-richblack-700 border-b-[2px] text-[14px] border-richblack-400 text-richblack-200 rounded-md' type='text' name='category' placeholder='select category'>
+                <select defaultValue={""} {...register("category",{required:true})} className='w-full px-2 py-1 bg-richblack-700 border-b-[2px] text-[14px] border-richblack-400 text-richblack-200 rounded-md' type='text' name='category' placeholder='select category'>
                     {
                         courseCategories.map((courseCat,index) => {
                             return (

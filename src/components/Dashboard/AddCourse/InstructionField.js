@@ -10,8 +10,9 @@ const InstructionField = ({name,label,errors,register,setValue,placeholder}) => 
 
     useEffect(() => {
         if(editCourse){
-            setInstructionsList(JSON.parse(course?.instructions[0]));
+            setInstructionsList(course?.instructions);
         }
+        console.log("Category",course?.category);
         register(name,{required:true,validate:(value) => value.length>0});
     },[]);
 

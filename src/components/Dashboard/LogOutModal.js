@@ -9,7 +9,7 @@ const LogOutModal = ({data}) => {
   };
 
   return (
-    <div className='absolute bg-richblack-100 top-0 left-0 w-[100vw] h-[100%] z-[10] flex justify-center items-center' style={modalStyles} >
+    <div className='absolute bg-richblack-100 top-0 left-0 w-[100vw] h-[100%] z-[1000] flex justify-center items-center' style={modalStyles} >
       <div className='bg-richblack-800 px-[2rem] py-[2rem] rounded-lg'>
         <div className='flex flex-col gap-[0.3rem]'>
             <h1 className='text-richblack-5 font-semibold font-mono tracking-tighter text-[18px]'>{data?.heading}</h1>

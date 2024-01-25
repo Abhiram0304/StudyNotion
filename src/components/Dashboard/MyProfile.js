@@ -17,7 +17,8 @@ const MyProfile = () => {
                     <div className='md:w-[80px] md:h-[80px] w-[40px] h-[40px] rounded-full flex justify-center items-center'><img src={`${user?.image}`} width={"100%"} className='rounded-full' alt='userImage' /></div>
                     <div className='flex flex-col items-start justify-evenly'>
                         <h2 className='text-richblack-5 font-semibold text-[18px]'>{user?.firstName + " " + user?.lastName}</h2>
-                        <p className='text-richblack-300 text-[14px]'>{user?.email}</p>
+                        <p className='text-richblack-300 md:hidden flex text-[14px]'>{user?.email.length > 2 ? `${user?.email.substring(0, 20)}...` : user?.email}</p>
+                        <p className='text-richblack-300 md:flex hidden text-[14px]'>{user?.email}</p>
                     </div>
                 </div>
                 <EditBtn />
@@ -47,12 +48,12 @@ const MyProfile = () => {
                             <p className='text-richblack-5 font-medium text-[14px]'>{user?.lastName}</p>
                         </div>
                     </div>
-                    <div className='flex justify-start gap-[2rem]'>
-                        <div className='w-[40%]'>
+                    <div className='flex md:flex-row flex-col justify-start md:gap-[2rem] gap-[0.5rem]'>
+                        <div className='md:w-[40%]'>
                             <h2 className='text-richblack-300 font-medium text-[14px]'>Email</h2>
                             <p className='text-richblack-5 font-medium text-[14px]'>{user?.email}</p>
                         </div>
-                        <div className='w-[40%]'>
+                        <div className='md:w-[40%]'>
                             <h2 className='text-richblack-300 font-medium text-[14px]'>Phone Number</h2>
                             <p className='text-richblack-5 font-medium text-[14px]'>{user?.additionalDetails?.contactNumber ? (user?.additionalDetails?.contactNumber) : ("Add Contact Number")}</p>
                         </div>

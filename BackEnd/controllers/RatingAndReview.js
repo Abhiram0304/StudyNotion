@@ -1,6 +1,6 @@
 const RatingAndReview = require("../models/RatingAndReview");
 const Course = require('../models/Course');
-const { default: mongoose } = require("mongoose");
+const { default : mongoose } = require("mongoose");
 
 exports.createRatingAndReview = async (req,res) => {
     try{
@@ -19,15 +19,17 @@ exports.createRatingAndReview = async (req,res) => {
         // if user already gave review
         const ratingExist = await RatingAndReview.findOne({user:userId,course:courseId});
         if(ratingExist){
-            return res.status(400).json({
-                success:false,
-                message:"User already Gave Rating and review"
+            await RatingAndReview.findByIdAndUpdate({user:userId,courseId:courseId},{rating : rating, review : review},{new:true});
+            return res.status(200).json({
+                success:true,
+                message:"Updated rating and review SuccessFully",
             })
         }
+
         // create rating and review
         const createdRatingAndReview = await RatingAndReview.create({rating,review,course:courseId,user:userId});
         // attach it to course model
-        await Course.findByIdAndUpdate({courseId},{$push:{ratingAndReviews:createdRatingAndReview,_id}},{new:true});
+        await Course.findByIdAndUpdate({_id:courseId},{$push:{ratingAndReviews:createdRatingAndReview._id}},{new:true});
         // return response
         return res.status(200).json({
             success:true,
@@ -35,10 +37,36 @@ exports.createRatingAndReview = async (req,res) => {
             createdRatingAndReview
         });
     }catch(e){
+        console.log(e);
         return res.status(400).json({
             success:false,
             message:"Cannot Create Rating and Review"
         });
+    }
+}
+
+exports.getStudentCourseRatingAndReview = async (req,res) => {
+    try{
+        const userId = req.user.id;
+        const {courseId} = req.body;
+
+        const ratingAndReview = await RatingAndReview.findOne({course:courseId,user:userId});
+        if(!ratingAndReview){
+            return res.status(400).json({
+                success:false,
+                message:"No rating and review Found",
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            message:"Rating and Review Found",
+            data:ratingAndReview,
+        })
+    }catch(e){
+        return res.status(400).json({
+            success:false,
+            message:"Unable to fetch rating and reviews"
+        })
     }
 }
 
@@ -113,7 +141,7 @@ exports.getAllRatingAndReview = async (req,res) => {
 exports.getCourseRatingAndReview = async (req,res) => {
     try{
         const {courseId} = req.body;
-        const courseRatingAndReview = await RatingAndReview.find({course:courseId}).sort({rating:"desc"}).populate({path:"user",select:"firstName lastName email image"}).populate({path:"course",select:"courseName"}).exec();
+        const courseRatingAndReview = await RatingAndReview.find({course:courseId}).sort({rating}).populate({path:"user",select:"firstName lastName email image"}).populate({path:"course",select:"courseName"}).exec();
 
         if(!courseRatingAndReview){
             return res.status(400).json({

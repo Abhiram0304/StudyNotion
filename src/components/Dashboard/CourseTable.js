@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import { MdEdit } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
 import DeleteModal from './AddCourse/DeleteModal';
-import {deleteCourse, fetchCourseDetails} from '../../services/operations/courseDetailsAPI'
+import {deleteCourse, fetchCourseDetails, getFullDetailsOfCourse} from '../../services/operations/courseDetailsAPI'
 import { DateFormat } from '../../utilities/DateFormat';
 import { FaCheckCircle } from "react-icons/fa";
 import { HiClock } from "react-icons/hi";
@@ -24,7 +24,7 @@ const CourseTable = ({courses,setCourses}) => {
         setCourses(courses);
         setDeleteCourseModalData(null);
     }
-
+    
     const editCourseHandler = async(courseId) => {
         const response = await fetchCourseDetails(courseId);
         response.instructions = JSON.parse(response.instructions[0]);
@@ -55,9 +55,9 @@ const CourseTable = ({courses,setCourses}) => {
                         ) : (
                             courses.map((course,index) => (
                                 <Tr className="w-full gap-[0.5rem] flex flex-row justify-between items-center" key={index}>
-                                    <Td className="flex justify-start items-center md:w-[70%] gap-[1rem]">
-                                        <img src={course?.thumbnail} loading='lazy' className='rounded-lg lg:w-[300px] w-[150px]' />
-                                        <div className='flex flex-col py-[0.25rem] justify-between items-start'>
+                                    <Td className="relative flex justify-start items-start md:w-[70%] gap-[1rem]">
+                                        <img src={course?.thumbnail} loading='lazy' className='relative rounded-lg lg:w-[300px] w-[150px]' />
+                                        <div className='flex flex-col gap-[0.5rem] py-[0.25rem] h-full justify-center items-start'>
                                             <div className='lg:text-[20px] text-[16px] text-richblack-5 font-semibold leading-[28px]'>{course?.courseName}</div>
                                             <div className='lg:text-[14px] text-[12px] lg:leading-[22px] leading-[14px] text-richblack-100'>{course?.courseDescription.length > 120 ? (course?.courseDescription.slice(0,120) + "...") : (course?.courseDescription) }</div>
                                             <div className='lg:text-[14px] text-[14px] text-richblack-5'>Created : {DateFormat(course?.createdAt)}</div>

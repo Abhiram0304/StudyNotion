@@ -5,7 +5,7 @@ import logo from '../../assets/Logo/rzp_logo.png';
 import {resetCart} from '../../reducer/slices/cartSlice';
 import { setPaymentLoading } from '../../reducer/slices/courseSlice';
 
-const {COURSE_PAYMENT_API,COURSE_VERIFY_API,PAYMENT_SUCCESS_EMAIL} = studentEndpoints;
+const {COURSE_PAYMENT_API,COURSE_VERIFY_API,PAYMENT_SUCCESS_EMAIL,BUY_COURSES_FOR_FREE} = studentEndpoints;
 
 function loadScript(src) {
     return new Promise((resolve) => {
@@ -67,6 +67,26 @@ export const buyCourse = async (coursesId,userDetails,navigate,dispatch,token) =
     }catch(e){
         console.log(e);
         toast.error("Payment UnsuccessFul");
+    }
+    toast.dismiss(toastId);
+}
+
+export const buyCoursesForFree = async (coursesId,dispatch,navigate,token) => {
+    const toastId = toast.loading("Please Wait a moment");
+    try{
+        const response = await APIconnector("POST",BUY_COURSES_FOR_FREE,{coursesId,token});
+
+        if(!response?.data?.success){
+            throw new Error(response?.data?.message);
+        }
+
+        toast.success("Payment SuccessFul");
+        toast.success("Successfully enrolled into the Course");
+        await dispatch(resetCart());
+        navigate("/dashboard/enrolledCourses");
+    }catch(e){
+        console.log(e);
+        toast.error("Payment Unsuccessful");
     }
     toast.dismiss(toastId);
 }

@@ -27,6 +27,8 @@ import Instructor from "./components/Dashboard/InstructorDashboard/Instructor";
 import ViewCourse from './components/ViewCourse/ViewCourse';
 import VideoDetails from "./components/ViewCourse/VideoDetails";
 import { useSelector } from "react-redux";
+import Error from "./pages/Error";
+import { useState } from "react";
 
 function App() {
 
@@ -86,6 +88,7 @@ function App() {
         </Route>
 
         <Route path="/courses/:courseId" element={<CourseDetails />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

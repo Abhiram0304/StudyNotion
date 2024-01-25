@@ -63,7 +63,6 @@ const Settings = () => {
             const formData = new FormData();
             formData.append("displayPicture", imageFile);
             await dispatch(updateProfileImage(formData,token));
-            console.log("USER IMAGE AFTER DISPATCH :",user);
             setLoading(false);
             setPreviewImage(null);
             setImageFile(null);

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import countryCode from '../../data/countrycode.json';
 import { useNavigate } from 'react-router-dom';
 import {updateProfile} from '../../services/operations/settingsAPI';
-import { setUser } from '../../reducer/slices/profileSlice';
 
 const EditProfile = () => {
 
@@ -92,7 +91,7 @@ const EditProfile = () => {
                                 </div>
                             </label>
                         </div>
-                        <div className='flex md:flex-row flex-col items-center md:gap-[2rem] gap-[1rem] justify-center'>
+                        <div className='flex flex-col items-start md:flex-row-reverse md:gap-[2rem] gap-[1rem] justify-center'>
                             <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>Phone Number</p>
                                 <div className='w-full flex justify-between gap-[8px] items-center flex-row'>
@@ -124,7 +123,7 @@ const EditProfile = () => {
                             </label>
                             <label className='flex md:w-[45%] w-[90%] relative flex-col gap-[2px]'>
                                 <p className='text-richblack-5 flex gap-1 items-center text-[14px] tracking-wide'>About</p>
-                                <input className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='about' placeholder='Enter bio Details' defaultValue={user?.additionalDetails?.about} {...register("about",{required:false,"maxLength":{value:100,message:"Max limit 100 characters"}})}/>
+                                <textarea rows={4} className='w-full bg-richblack-700 border-b-[2px] text-[16px] border-richblack-400 text-richblack-200 rounded-md py-1 px-2' type='text' name='about' placeholder='Enter bio Details' defaultValue={user?.additionalDetails?.about} {...register("about",{required:false,"maxLength":{value:100,message:"Max limit 100 characters"}})}/>
                                 {
                                     errors.about && (
                                         <span className='mt-1 text-[12px] text-[red]'>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TiStarFullOutline , TiStarHalfOutline , TiStarOutline } from "react-icons/ti";
 
 // change the default input of reviewCount
-const RatingStars = ({reviewCount = 4.5, size}) => {
+const RatingStars = ({reviewCount = 1, size}) => {
 
     const [starCount,setStarCount] = useState({fullStar:0,halfStar:0,emptyStar:0});
 

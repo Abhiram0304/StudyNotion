@@ -40,7 +40,7 @@ const DashboardSideBar = () => {
                             if(link.type && user?.accountType !== link.type) return null;
                             else{
                                 return (
-                                    <DashboardSideBarLink key={link.id} link={link} />
+                                    <div onClick={() => setOpenSideBar(false)}><DashboardSideBarLink key={link.id} link={link} /></div>
                                 )
                             }
                         })
@@ -48,7 +48,7 @@ const DashboardSideBar = () => {
                 </div>
                 <div className='my-6 mx-auto w-10/12 h-[2px] bg-richblack-600'></div>
                 <div className='relative flex flex-col'>
-                    <DashboardSideBarLink link={{name:"Settings",path:"/dashboard/settings",icon:"VscSettingsGear"}} />
+                    <div onClick={() => setOpenSideBar(false)} ><DashboardSideBarLink link={{name:"Settings",path:"/dashboard/settings",icon:"VscSettingsGear"}} /></div>
                     <button
                         onClick={() => setOpenModal({  
                             heading:"Are you sure?",

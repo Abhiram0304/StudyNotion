@@ -4,9 +4,8 @@ import { enrolledCourses } from '../../services/operations/profileAPI'
 import ProgressBar from '@ramonak/react-progress-bar'
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import { HiOutlineDocumentCheck } from "react-icons/hi2";
-import { LuTrash2 } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom'
+import './enrolledCourses.css';
 
 const EnrolledCourses = () => {
 
@@ -22,7 +21,6 @@ const EnrolledCourses = () => {
         setLoading(true);
         try{
             const res = await dispatch(enrolledCourses(token));
-            console.log("res : ",res);
             setEnrolledCourseList(res);
         }catch(e){
             console.log(e);
@@ -32,15 +30,14 @@ const EnrolledCourses = () => {
 
     useEffect(() => {
         getEnrolledCourses();
-        console.log("Enrolled List",enrolledCoursesList);
     },[]);
 
   return (
     <div className='font-inter min-h-[100vh] lg:w-[85%] md:w-[75%] bg-richblack-900'>
         {
             loading ? 
-            (<div className='w-full h-full flex justify-center items-center'>
-                <div className='text-[45px] font-semibold text-richblack-5'>Loading...</div>
+            (<div className='w-[100vw] h-[100vh] bg-richblack-900 flex justify-center items-center'>
+               <div className='spinner'></div>
             </div>) : 
             (
                 <div className='px-[2rem] flex flex-col gap-[1.5rem] py-[1rem]'>
@@ -53,7 +50,7 @@ const EnrolledCourses = () => {
                                             <Tr className="w-full flex flex-row justify-between items-center">
                                                 <Th className="text-richblack-50 font-medium md:text-[18px] md:w-[45%] text-[14px] leading-[22px]">Course Name</Th>
                                                 <Th className="text-richblack-50 font-medium md:text-[18px] text-[14px]">Duration</Th>
-                                                <Th className="text-richblack-50 font-medium md:text-[18px] text-[14px]">Progress</Th>
+                                                <Th className="text-richblack-50 font-medium md:text-[18px] md:w-[200px] w-[180px] text-[12px]">Progress</Th>
                                             </Tr>
                                         </Thead>
                                         
@@ -70,18 +67,20 @@ const EnrolledCourses = () => {
                                                                 </div>
                                                             </Td>
                                                             <Td className="text-richblack-50 text-center flex justify-center md:text-[18px] text-[14px] items-center">
-                                                                2h 30min
+                                                                {course?.totalDuration}
                                                             </Td>
-                                                            <Td className="text-richblack-100 flex flex-col gap-[0.5rem] md:text-[18px] text-[14px]">
-                                                                <p className='text-richblack-50 text-[14px]'>Progress: {65 || 0}%</p>
-                                                                <ProgressBar
-                                                                    completed={65}
-                                                                    height='10px'
-                                                                    bgColor='#47A5C5'
-                                                                    baseBgColor='#2C333F'
-                                                                    isLabelVisible={false}
-
-                                                                />
+                                                            <Td  className="md:w-[200px] w-[400px] text-richblack-100 flex flex-col gap-[0.5rem] md:text-[18px] text-[14px]">
+                                                                <p className='text-richblack-50 md:text-[14px] text-[14px]'>Progress : {course?.progressPercentage || 0}%</p>
+                                                                <div className='md:w-[200px] w-[160px]'>
+                                                                    <ProgressBar
+                                                                        completed={course?.progressPercentage || 0}
+                                                                        height='10px'
+                                                                        bgColor='#47A5C5'
+                                                                        baseBgColor='#2C333F'
+                                                                        isLabelVisible={false}
+                                                                        width='100%'
+                                                                    />
+                                                                </div>
                                                             </Td>
                                                         </Tr>
                                                     )

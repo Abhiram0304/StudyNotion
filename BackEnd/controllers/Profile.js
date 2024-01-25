@@ -3,7 +3,8 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const Course = require('../models/Course');
 const {uploadImage} = require('../utilities/ImageUploader'); 
-
+const { convertTimeFormat } = require('../utilities/convertTimeFormat');
+const CourseProgess = require('../models/CourseProgess');
 // already profile is created, while creating the user it is set to NULL, so we just need to update it.
 exports.updateProfile = async (req,res) => {
     try{
@@ -144,8 +145,7 @@ exports.updateDP = async (req,res) => {
 exports.getEnrolledCourses = async (req,res) => {
     try{
         const userId = req.user.id;
-        const details = await User.findOne({_id:userId}).populate({path:"courses",populate:{path:"courseContent",populate:{path:"subSection"}}})
-                                                       .exec();
+        let details = await User.findOne({_id:userId}).populate({path:"courses",populate:{path:"courseContent",populate:{path:"subSection"}}}).exec();
 
         if(!details){
             return res.status(404).json({
@@ -154,6 +154,27 @@ exports.getEnrolledCourses = async (req,res) => {
 
             })
         }
+        details = details.toObject();
+        let subSectionLength = 0;
+        for(let i=0; i<details.courses.length; i++){
+            let totalDurationInSeconds = 0;
+            subSectionLength = 0;
+            if(details.courses[i].courseContent && details.courses[i].courseContent.length > 0){
+                for(let j=0; j<details.courses[i].courseContent.length; j++){
+                    totalDurationInSeconds += details.courses[i].courseContent[j].subSection.reduce((acc,curr) => acc + parseInt(curr.timeDuration),0);
+                    details.courses[i].totalDuration = convertTimeFormat(totalDurationInSeconds);
+                    subSectionLength += details.courses[i].courseContent[j].subSection.length;
+                }
+            }
+            let courseProgressCount = await CourseProgess.findOne({courseId:details.courses[i]._id,userId:userId});
+            courseProgressCount = courseProgressCount?.completedVideos.length;
+            if(subSectionLength===0){
+                details.courses[i].progressPercentage = 100;
+            }else{
+                const multiplier = Math.pow(10,2);
+                details.courses[i].progressPercentage = Math.round((courseProgressCount/subSectionLength) * 100 * multiplier) / multiplier;
+            }
+        }
 
         return res.status(200).json({
             success:true,
@@ -161,6 +182,7 @@ exports.getEnrolledCourses = async (req,res) => {
             data:details.courses,
         })
     }catch(e){
+        console.log(e);
         return res.status(400).json({
             success:false,
             message:e.message,

@@ -18,6 +18,8 @@ import LoginModal from './LoginModal';
 import { addToCart } from '../reducer/slices/cartSlice';
 import { buyCourse } from '../services/operations/studentOperationsAPI';
 import RatingStars from '../components/Commons/RatingStars';
+import { buyCoursesForFree } from '../services/operations/studentOperationsAPI';
+import GetAvgRating from '../utilities/getAvgRating';
 
 const CourseDetails = () => {
 
@@ -30,14 +32,16 @@ const CourseDetails = () => {
   const [loading,setLoading] = useState(false);
   const [date,setData] = useState([]);
   const [loginData,setLoginData] = useState(null);
+  const [avgRating,setAvgRating] = useState(1);
 
   useEffect(() => {
     ;(async () => {
       setLoading(true);
       try{
         const response = await fetchCourseDetails(courseId);
-        console.log("RESPONSE: ",response);
         setCourseDetails(response);
+        const count = GetAvgRating(courseDetails?.ratingAndReviews);
+        setAvgRating(count);
         getDate(courseDetails?.createdAt);
         countLectures();
       }catch(error){
@@ -55,6 +59,11 @@ const CourseDetails = () => {
 
   const buyCourseHandler = async() => {
     await dispatch(buyCourse([courseId],user,navigate,dispatch,token));
+    return;
+  }
+
+  const buyCourseForFree = async () => {
+    await dispatch(buyCoursesForFree([courseId],dispatch,navigate,token));
     return;
   }
 
@@ -104,8 +113,8 @@ const CourseDetails = () => {
                     <div className='text-richblack-5 text-[36px] font-semibold tracking-wide'>{courseDetails?.courseName}</div>
                     <p className='text-richblack-200 text-[16px]'>{courseDetails?.courseDescription}</p>
                     <div className='flex gap-[1rem] justify-start items-center'>
-                      <RatingStars size={30} />
-                      <p className='text-richblack-100'>(190)</p>
+                      <RatingStars reviewCount={avgRating} size={30} />
+                      <p className='text-richblack-100'>({courseDetails?.ratingAndReviews?.length})</p>
                     </div>
                     <p className='text-[20px] text-richblack-50 flex gap-[0.5rem]'>Created By :<p className='text-semibold tracking-wide'>{courseDetails?.instructor?.firstName} {courseDetails?.instructor?.lastName}</p></p>
                     <div className='flex justify-start items-center gap-[3rem]'>
@@ -133,8 +142,8 @@ const CourseDetails = () => {
                         <div className='text-[18px] text-richblack-50'>{courseDetails?.courseContent.length} Sections</div>
                         <div className='text-[18px] text-richblack-50'>|</div>
                         <div className='text-[18px] text-richblack-50'>{totalLectures} Lectures</div>
-                        <div className='text-[18px] text-richblack-50'>|</div>
-                        <div className='text-[18px] text-richblack-50'>total Time</div>
+                        {/* <div className='text-[18px] text-richblack-50'>|</div>
+                        <div className='text-[18px] text-richblack-50'>total Time</div> */}
                       </div>
                     </div>
                     <div className='w-full border-[2px] rounded-lg border-richblack-400 transition-all duration-300'>
@@ -160,8 +169,9 @@ const CourseDetails = () => {
                   <img src={courseDetails?.thumbnail} loading='lazy' className='w-full' />
                   <div className='w-full flex flex-col gap-[1rem] bg-richblack-700 px-[1.5rem] py-[1.5rem]'>
                     <div className='text-richblack-5 text-[32px] font-edu-sa'>Rs. {courseDetails?.price}</div>
-                    <div onClick={addToCartHandler}><Button active={true}>Add To Cart</Button></div>
+                    <div onClick={addToCartHandler}><Button active={false}>Add To Cart</Button></div>
                     <div onClick={buyCourseHandler}><Button active={false} >Buy Now</Button></div>
+                    <div onClick={buyCourseForFree}><Button active={true} >Buy Course For Free</Button></div>
                     <p className='text-richblack-5 text-[16px] text-center'>30-Day Money-Back Guarantee</p>
                     <div className='w-full flex justify-center items-start flex-col gap-[0.25rem]'>
                       <p className='text-white text-[18px]'>This Course Includes:</p>

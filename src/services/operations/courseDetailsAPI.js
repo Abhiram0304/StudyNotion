@@ -3,7 +3,7 @@ import { APIconnector } from "../APIconnector";
 import {courseEndpoints, catalogData} from '../APIs';
 import {setCourse,setStage} from '../../reducer/slices/courseSlice'
 
-const {GET_ALL_COURSE_API,COURSE_DETAILS_API,EDIT_COURSE_API,COURSE_CATEGORIES_API,CREATE_COURSE_API,CREATE_SECTION_API,CREATE_SUBSECTION_API,UPDATE_SECTION_API,UPDATE_SUBSECTION_API,GET_ALL_INSTRUCTOR_COURSES_API,DELETE_SECTION_API,DELETE_SUBSECTION_API,DELETE_COURSE_API,GET_FULL_COURSE_DETAILS_AUTHENTICATED,LECTURE_COMPLETION_API,CREATE_RATING_API,CHANGE_COURSE_STATUS} = courseEndpoints;
+const {GET_ALL_COURSE_API,COURSE_DETAILS_API,EDIT_COURSE_API,COURSE_CATEGORIES_API,CREATE_COURSE_API,CREATE_SECTION_API,CREATE_SUBSECTION_API,UPDATE_SECTION_API,UPDATE_SUBSECTION_API,GET_ALL_INSTRUCTOR_COURSES_API,DELETE_SECTION_API,DELETE_SUBSECTION_API,DELETE_COURSE_API,GET_FULL_COURSE_DETAILS_AUTHENTICATED,LECTURE_COMPLETION_API,CREATE_EDIT_RATING_API,GET_STUDENT_COURSE_RATING_AND_REVIEW,CHANGE_COURSE_STATUS} = courseEndpoints;
 const {CATALOGPAGEDATA_API} = catalogData;
 
 export function getAllCourses(){
@@ -268,7 +268,6 @@ export function getFullDetailsOfCourse(courseId,token){
             if(!response?.data?.success){
                 throw new Error(response?.data?.message);
             }
-            console.log("response : ",response);
             return response?.data?.data;
         }catch(e){
             console.log(e);
@@ -310,6 +309,58 @@ export function fetchCatalogPageCourses(categoryId){
         }catch(e){
             toast.error("Unable to load Catalog");
             return null;
+        }
+    }
+}
+
+export function createAndEditRatingAndReview(courseId,rating,review,token){
+    return async() => {
+        const toastId = toast.loading("Please Wait...");
+        try{
+            const response = await APIconnector("POST",CREATE_EDIT_RATING_API,{courseId,rating,review},{Authorization : `Bearer ${token}`});
+            
+            if(!response?.data?.success){
+                throw new Error(response?.data?.message);
+            }
+
+            toast.success("Successfully Submitted your Rating and Review");
+        }catch(e){
+            console.log(e);
+            toast.error("Cant add rating and review");
+        }
+        toast.dismiss(toastId);
+    }
+}
+
+export function getStudentCourseRatingAndReview(courseId,token){
+    return async() => {
+        try{
+            const response = await APIconnector("POST",GET_STUDENT_COURSE_RATING_AND_REVIEW,{courseId},{Authorization : `Bearer ${token}`});
+
+            if(!response?.data?.success){
+                throw new Error(response?.data?.message);
+            }
+
+            return response?.data;
+        }catch(e){
+            console.log(e);
+            return null;
+        }
+    }
+}
+
+export function markLectureAsCompleted(data,token){
+    return async() => {
+        try{
+            const response = await APIconnector("POST",LECTURE_COMPLETION_API,data,{Authorization : `Bearer ${token}`});
+
+            if(!response?.data?.success){
+                return false;
+            }
+            return true;
+        }catch(e){
+            console.log(e);
+            return false;
         }
     }
 }

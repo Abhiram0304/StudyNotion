@@ -4,6 +4,7 @@ const CourseProgress = require('../models/CourseProgess');
 const Course = require("../models/Course")
 
 exports.updateCourseProgress = async (req,res) => {
+    
     const {courseId,subSectionId} = req.body;
     const userId = req.user.id;
 
@@ -17,7 +18,8 @@ exports.updateCourseProgress = async (req,res) => {
             })
         }
 
-        let courseProgress = await CourseProgress.findOne({courseId:courseId,userId:userId});
+        const courseProgress = await CourseProgress.findOne({courseId:courseId,userId:userId});
+
 
         if(!courseProgress){
             return res.stauts(404).json({
@@ -29,12 +31,12 @@ exports.updateCourseProgress = async (req,res) => {
             // If course progress exists, check if the subsection is already completed
             if(courseProgress.completedVideos.includes(subSectionId)){
                 return res.status(400).json({
-                    error:"SubSection Alreafy Completed"
+                    error:"SubSection Already Completed"
                 })
             }
 
             // else push the sub section into completedVideos
-            courseProgress.completedVideos.push(subSection);
+            courseProgress.completedVideos.push(subSectionId);
         }
 
         await courseProgress.save();

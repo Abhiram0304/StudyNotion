@@ -22,7 +22,7 @@ const DashboardSideBarLink = ({link}) => {
           : "bg-opacity-0 text-richblack-300"}
           transition-all duration-200`}
       >
-        <Icon />
+        <Icon className="text-[1rem]" />
         <span>{link.name}</span>
     </NavLink>
   )
