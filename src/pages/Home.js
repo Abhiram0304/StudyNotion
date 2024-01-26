@@ -17,7 +17,7 @@ const Home = () => {
     <div className='w-full'>
         {/* Section 1 */}
         <div className='bg-richblack-900'>
-            <div className='relative flex flex-col mx-auto w-11/12 items-center text-white justify-between lg:pb-[15rem] md:pb-[37rem] pb-[55rem]'>
+            <div className='relative flex flex-col mx-auto w-11/12 items-center text-white justify-between pb-[3rem]'>
 
                 <div className='relative lg:w-3/4 w-5/6 mx-auto flex flex-col gap-[38px] items-center justify-center '>
                     <Link to="/signup">
@@ -35,7 +35,7 @@ const Home = () => {
                 </div>
 
                 <div className='relative lg:w-3/4 w-5/6 h-auto mb-[40px] mt-[80px]'>
-                    <video className='w-full relative z-[3] rounded-md' src={Banner} muted autoPlay loop />
+                    <video className='w-full relative z-[3] rounded-md' muted autoPlay loop><source src={Banner} type="video/mp4" /></video>
                     <div className='w-full absolute top-2 left-2 h-full z-[2] bg-white rounded-md'></div>
                     <div className='w-3/4 h-1/2 absolute z-[1] top-[40%] left-[30%] rounded-full bg-blue-50 shadow-sm blur-[70px]'></div>
                     <div className='w-3/4 h-1/2 absolute z-[1] top-[10%] left-[0%] rounded-full bg-blue-50 shadow-sm blur-[70px]'></div>
