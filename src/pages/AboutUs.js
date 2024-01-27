@@ -9,6 +9,7 @@ import Footer from '../components/Commons/Footer'
 import Statistics from '../components/AboutUs/Statistics'
 import Button from '../components/HomePage/Button'
 import Box from '../components/AboutUs/Box'
+import ReviewSlider from '../components/Commons/ReviewSlider'
 
 const AboutUs = () => {
   return (
@@ -90,6 +91,13 @@ const AboutUs = () => {
                     <Box color={2} title={`Rating "Auto-grading"`} description={"You will immediately get feedback during the learning process without having to wait for an answer or response from the mentor."} />
                     <Box color={1} title={"Ready to Work"} description={"Connected with over 150+ hiring partners, you will have the opportunity to find a job after graduating from our program."} />
                 </div>
+            </div>
+        </div>
+
+        <div className='bg-richblack-900'>
+            <div className='lg:w-[80%] py-[2rem] md:w-[85%] w-[95%] flex flex-col gap-[2rem] mx-auto'>
+                <h1 className='text-richblack-5 text-[32px] font-medium tracking-wider text-center'>Reviews from other learners</h1>
+                <ReviewSlider />
             </div>
         </div>
 

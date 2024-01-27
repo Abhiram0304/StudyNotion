@@ -10,6 +10,7 @@ import TimeLineSection from '../components/HomePage/TimeLineSection';
 import KnowYourProgressSection from '../components/HomePage/KnowYourProgressSection';
 import InstructorImage from '../assets/Images/Instructor.png';
 import ExploreMore from '../components/HomePage/ExploreMore';
+import ReviewSlider from '../components/Commons/ReviewSlider';
 
 const Home = () => {
   return (
@@ -112,6 +113,13 @@ const Home = () => {
                     <Button active={true} linkedTo={'/'}>Start Teaching Today <BsArrowRightShort /></Button>
                 </div>
             </div>            
+        </div>
+
+        <div className='bg-richblack-900'>
+            <div className='lg:w-[80%] py-[2rem] md:w-[85%] w-[95%] flex flex-col gap-[2rem] mx-auto'>
+                <h1 className='text-richblack-5 text-[32px] font-medium tracking-wider text-center'>Reviews from other learners</h1>
+                <ReviewSlider />
+            </div>
         </div>
 
         {/* Footer */}

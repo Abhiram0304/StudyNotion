@@ -32,7 +32,7 @@ router.get("/showAllCategory",showAllCategory);
 router.post("/getCategoryPageDetails",getCategoryPageDetails);
 router.post("/createRatingAndReview",auth,isStudent,createRatingAndReview);
 router.post("/getAverageRating",getAverageRating);
-router.post("/getReviews",getAllRatingAndReview);
+router.get("/getReviews",getAllRatingAndReview);
 router.post("/getStudentCourseRatingsAndReview",auth,isStudent,getStudentCourseRatingAndReview);
 
 module.exports = router;

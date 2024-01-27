@@ -116,7 +116,7 @@ exports.getAverageRating = async (req,res) => {
 
 exports.getAllRatingAndReview = async (req,res) => {
     try{
-        const allRatingsAndReviews = await RatingAndReview.find({}).sort({rating:"desc"}).populate({path:"user",select:"firstName lastName email image"}).populate({path:"course",select:"courseName"}).exec();
+        const allRatingsAndReviews = await RatingAndReview.find().sort({rating: "desc"}).populate({path:"user",select:"firstName lastName email image"}).populate({path:"course",select:"courseName"}).exec();
 
         if(!allRatingsAndReviews){
             return res.status(400).json({
@@ -126,12 +126,12 @@ exports.getAllRatingAndReview = async (req,res) => {
         }
 
         return res.status(200).json({
-            success:false,
+            success:true,
             message:"Found All ratings and reviews Successfully",
             allRatingsAndReviews
         })
     }catch(e){
-        return res.status(200).json({
+        return res.status(400).json({
             success:false,
             message:"Cannot fetch all ratings and reviews"
         })
