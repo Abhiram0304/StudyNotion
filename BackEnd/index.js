@@ -27,12 +27,10 @@ app.use(
         credentials:true
     })
 )
-app.use(
-    fileUpload({
-        useTempFiles:true,
-        tempFileDir:"/temp"
-    })
-)
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));
 
 app.use("/auth",userRoutes);
 app.use("/profile",profileRoutes);
